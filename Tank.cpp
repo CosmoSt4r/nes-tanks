@@ -6,7 +6,7 @@ Tank::Tank(sf::Vector2f position)
 	
 	texture.loadFromFile("resources/tank.png");
 	sprite.setTexture(texture);
-	sprite.setOrigin(sf::Vector2f(40.f, 40.f));
+	sprite.setOrigin(sf::Vector2f(65.f / 2.f, 65.f / 2.f));
 	sprite.setPosition(position);
 }
 
