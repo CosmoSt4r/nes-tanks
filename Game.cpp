@@ -52,6 +52,8 @@ void Game::update(const sf::Time& deltaTime)
 void Game::render()
 {
 	window.clear();
+	for (Bullet bullet : tank.getBullets())
+		window.draw(bullet.getShape());
 	window.draw(tank.getSprite());
 	window.display();
 }
