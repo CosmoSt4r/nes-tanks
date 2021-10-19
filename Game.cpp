@@ -2,13 +2,19 @@
 
 Game::Game()
 	: window(sf::VideoMode(800, 600), "Tanks!")
-	, tank(sf::Vector2f(300, 300))
+	, tank(sf::Vector2f(300, 300), "resources/tank.png")
 {
-	timePerFrame = sf::seconds(1.f / 360.f);
+	/* ---Constructor---
+	 * Call Tank's and SFML Window's constructors
+	 * Set time per frame to 1/60 second (60 FPS) */
+
+	timePerFrame = sf::seconds(1.f / 60.f);
 }
 
 void Game::run()
 {
+	/* Main game cycle */
+
 	sf::Clock clock;
 	sf::Time deltaTime = sf::Time::Zero;
 	while (window.isOpen())
@@ -18,7 +24,7 @@ void Game::run()
 		{
 			deltaTime -= timePerFrame;
 			processEvents();
-			update(deltaTime);
+			update(timePerFrame);
 		}
 		render();
 	}

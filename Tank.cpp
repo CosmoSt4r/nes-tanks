@@ -1,14 +1,20 @@
 #include "Tank.h"
+#include <iostream>
 
-Tank::Tank(sf::Vector2f position)
+Tank::Tank(const sf::Vector2f& position, const char* source)
 {
-	speed = 2000.f;
-	shootingCooldown = 0.1f;
+	/* ---Constructor--- */
+
+	speed = 1.f;
 	shooting = false;
-	
-	texture.loadFromFile("resources/tank.png");
+	refreshShootingCooldown();
+
+	texture.loadFromFile(source);
 	sprite.setTexture(texture);
-	sprite.setOrigin(sf::Vector2f(65.f / 2.f, 65.f / 2.f));
+	
+	sf::FloatRect bounds = sprite.getLocalBounds();
+	sprite.setOrigin(bounds.width / 2.f, bounds.height / 2.f);
+	
 	sprite.setPosition(position);
 }
 
@@ -20,21 +26,33 @@ const std::vector<Bullet>& Tank::getBullets() const
 
 void Tank::putKeyOnStack(const sf::Keyboard::Key& key, const bool isPressed)
 {
+	/* Put pressed key on stack */
+
 	if (isPressed)
+	{
 		if ((key == sf::Keyboard::Up) || (key == sf::Keyboard::Down) ||
 			(key == sf::Keyboard::Left) ||  (key == sf::Keyboard::Right))  
 			pressedKeys.push(key);
-
-	while (!sf::Keyboard::isKeyPressed(pressedKeys.top()) 
-					&& !pressedKeys.empty())
-		pressedKeys.pop();
+	} 
+	else {
+		/* If stack's top key is released 
+	 	* remove it from stack */
+		while (!sf::Keyboard::isKeyPressed(pressedKeys.top()) 
+				&& !pressedKeys.empty())
+			pressedKeys.pop();
+	}
 }
 
-void Tank::handleInput(const sf::Keyboard::Key& key, const bool isPressed)
+void Tank::refreshShootingCooldown()
+{ shootingCooldown = 250; }
+
+void Tank::updateMovement()
 {
-	putKeyOnStack(key, isPressed);
+	/* Update tank's movement according to stack's top key */
+
 	if (pressedKeys.empty())
 	{
+		/* Key stack is empty so tank has to stop */
 		movement = sf::Vector2f(0.f, 0.f);
 	}
 	else if (pressedKeys.top() == sf::Keyboard::Up)
@@ -57,6 +75,13 @@ void Tank::handleInput(const sf::Keyboard::Key& key, const bool isPressed)
 		sprite.setRotation(90.f);
 		movement.y = 0; movement.x = speed;
 	}
+}
+
+void Tank::handleInput(const sf::Keyboard::Key& key, const bool isPressed)
+{
+	/* Handle player's input */
+
+	putKeyOnStack(key, isPressed);
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 		shooting = true;
@@ -66,14 +91,25 @@ void Tank::handleInput(const sf::Keyboard::Key& key, const bool isPressed)
 
 void Tank::update(const sf::Time& deltaTime)
 {
-	if (shootingCooldown > 0.f)
-		shootingCooldown -= deltaTime.asSeconds();
-	if (shooting && shootingCooldown <= 0.f)
+	/* Update tank's position */
+
+	sf::Int32 elapsedTime = deltaTime.asMilliseconds();
+
+	if (shootingCooldown > 0)
+		shootingCooldown -= elapsedTime; 
+
+	if (shooting && shootingCooldown <= 0)
 	{
+		/* Shoot new bullet and refresh cooldown */
 		bullets.push_back(Bullet(sprite.getPosition(), sprite.getRotation()));
-		shootingCooldown = 0.1f;
+		refreshShootingCooldown();
 	}
+
+	/* Update all bullets */
 	for (Bullet& bullet : bullets)
 		bullet.update(deltaTime);
-	sprite.move(movement * deltaTime.asSeconds());
+
+	/* Move sprite according to pressed key */
+	updateMovement();
+	sprite.move(movement * (float)elapsedTime);
 }

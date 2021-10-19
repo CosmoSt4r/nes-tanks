@@ -9,7 +9,7 @@
 class Tank
 {
 public:
-	Tank(sf::Vector2f);
+	Tank(const sf::Vector2f&, const char*);
 
 	const sf::Sprite& getSprite() const;
 	const std::vector<Bullet>& getBullets() const;
@@ -18,6 +18,8 @@ public:
 	void update(const sf::Time&);
 private:
 	void putKeyOnStack(const sf::Keyboard::Key&, const bool);
+	void refreshShootingCooldown();
+	void updateMovement();
 private:
 	float speed;
 	bool shooting;
