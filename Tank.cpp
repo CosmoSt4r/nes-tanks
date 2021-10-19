@@ -41,6 +41,7 @@ void Tank::putKeyOnStack(const sf::Keyboard::Key& key, const bool isPressed)
 				&& !pressedKeys.empty())
 			pressedKeys.pop();
 	}
+	updateMovement();
 }
 
 void Tank::refreshShootingCooldown()
@@ -110,6 +111,5 @@ void Tank::update(const sf::Time& deltaTime)
 		bullet.update(deltaTime);
 
 	/* Move sprite according to pressed key */
-	updateMovement();
 	sprite.move(movement * (float)elapsedTime);
 }
