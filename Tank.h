@@ -15,6 +15,7 @@ public:
 	const std::vector<Bullet>& getBullets() const;
 
 	void handleInput(const sf::Keyboard::Key&, const bool);
+	void shoot(const sf::Int32&);
 	void update(const sf::Time&);
 private:
 	void putKeyOnStack(const sf::Keyboard::Key&, const bool);

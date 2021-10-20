@@ -19,7 +19,7 @@ void Bullet::update(const sf::Time& deltaTime)
 {
 	/* Update bullet's position */
 
-	shape.move(movement * (float)deltaTime.asMilliseconds());
+	shape.move(movement * (float)deltaTime.asMilliseconds() / 2.f);
 }
 
 const sf::CircleShape& Bullet::getShape() const

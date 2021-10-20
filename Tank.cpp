@@ -84,10 +84,22 @@ void Tank::handleInput(const sf::Keyboard::Key& key, const bool isPressed)
 
 	putKeyOnStack(key, isPressed);
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
-		shooting = true;
-	else
-		shooting = false;
+	if (key == sf::Keyboard::Space)
+		shooting = isPressed;
+}
+
+void Tank::shoot(const sf::Int32& elapsedTime)
+{
+	/* Shoot new bullet and refresh cooldown 
+	 * if cooldown is less than zero */
+
+	if (shootingCooldown > 0)
+		shootingCooldown -= elapsedTime; 
+	else if ((shooting) && (shootingCooldown <= 0))
+	{
+		bullets.push_back(Bullet(sprite.getPosition(), sprite.getRotation()));
+		refreshShootingCooldown();
+	}
 }
 
 void Tank::update(const sf::Time& deltaTime)
@@ -96,20 +108,12 @@ void Tank::update(const sf::Time& deltaTime)
 
 	sf::Int32 elapsedTime = deltaTime.asMilliseconds();
 
-	if (shootingCooldown > 0)
-		shootingCooldown -= elapsedTime; 
-
-	if (shooting && shootingCooldown <= 0)
-	{
-		/* Shoot new bullet and refresh cooldown */
-		bullets.push_back(Bullet(sprite.getPosition(), sprite.getRotation()));
-		refreshShootingCooldown();
-	}
-
+	shoot(elapsedTime);
+	
 	/* Update all bullets */
 	for (Bullet& bullet : bullets)
 		bullet.update(deltaTime);
 
 	/* Move sprite according to pressed key */
-	sprite.move(movement * (float)elapsedTime);
+	sprite.move(movement * (float)elapsedTime / 2.f);
 }
