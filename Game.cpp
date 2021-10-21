@@ -7,7 +7,7 @@ Game::Game()
 	/* ---Constructor---
 	 * Call Tank's and SFML Window's constructors
 	 * Set time per frame to 1/60 second (60 FPS) */
-
+	
 	timePerFrame = sf::seconds(1.f / 60.f);
 }
 

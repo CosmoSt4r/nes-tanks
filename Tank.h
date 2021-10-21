@@ -1,5 +1,4 @@
 #pragma once
-#include <stack>
 #include <vector>
 
 #include <SFML/Graphics.hpp>
@@ -9,26 +8,21 @@
 class Tank
 {
 public:
-	Tank(const sf::Vector2f&, const char*);
+	const sf::Sprite& getSprite() const
+	{ return sprite; }
+	const std::vector<Bullet>& getBullets() const
+	{ return bullets; }
 
-	const sf::Sprite& getSprite() const;
-	const std::vector<Bullet>& getBullets() const;
+	virtual void shoot(const sf::Int32&)=0;
+	virtual void update(const sf::Time&)=0;
 
-	void handleInput(const sf::Keyboard::Key&, const bool);
-	void shoot(const sf::Int32&);
-	void update(const sf::Time&);
-private:
-	void putKeyOnStack(const sf::Keyboard::Key&, const bool);
-	void refreshShootingCooldown();
-	void updateMovement();
-private:
+protected:
 	float speed;
 	bool shooting;
 	float shootingCooldown;
 
 	sf::Vector2f movement;
-
-	std::stack<sf::Keyboard::Key> pressedKeys;
+	
 	std::vector<Bullet> bullets;
 
 	sf::Texture texture;

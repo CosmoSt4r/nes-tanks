@@ -1,7 +1,6 @@
-#include "Tank.h"
-#include <iostream>
+#include "Player.h"
 
-Tank::Tank(const sf::Vector2f& position, const char* source)
+Player::Player(const sf::Vector2f& position, const char* source)
 {
 	/* ---Constructor--- */
 
@@ -18,13 +17,7 @@ Tank::Tank(const sf::Vector2f& position, const char* source)
 	sprite.setPosition(position);
 }
 
-const sf::Sprite& Tank::getSprite() const
-{ return sprite; }
-
-const std::vector<Bullet>& Tank::getBullets() const
-{ return bullets; }
-
-void Tank::putKeyOnStack(const sf::Keyboard::Key& key, const bool isPressed)
+void Player::putKeyOnStack(const sf::Keyboard::Key& key, const bool isPressed)
 {
 	/* Put pressed key on stack */
 
@@ -44,10 +37,10 @@ void Tank::putKeyOnStack(const sf::Keyboard::Key& key, const bool isPressed)
 	updateMovement();
 }
 
-void Tank::refreshShootingCooldown()
+void Player::refreshShootingCooldown()
 { shootingCooldown = 250; }
 
-void Tank::updateMovement()
+void Player::updateMovement()
 {
 	/* Update tank's movement according to stack's top key */
 
@@ -78,7 +71,7 @@ void Tank::updateMovement()
 	}
 }
 
-void Tank::handleInput(const sf::Keyboard::Key& key, const bool isPressed)
+void Player::handleInput(const sf::Keyboard::Key& key, const bool isPressed)
 {
 	/* Handle player's input */
 
@@ -88,7 +81,7 @@ void Tank::handleInput(const sf::Keyboard::Key& key, const bool isPressed)
 		shooting = isPressed;
 }
 
-void Tank::shoot(const sf::Int32& elapsedTime)
+void Player::shoot(const sf::Int32& elapsedTime)
 {
 	/* Shoot new bullet and refresh cooldown 
 	 * if cooldown is less than zero */
@@ -102,7 +95,7 @@ void Tank::shoot(const sf::Int32& elapsedTime)
 	}
 }
 
-void Tank::update(const sf::Time& deltaTime)
+void Player::update(const sf::Time& deltaTime)
 {
 	/* Update tank's position */
 

@@ -1,7 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 
-#include "Tank.h"
+#include "Player.h"
 
 class Game
 {
@@ -16,5 +16,5 @@ private:
 
 	sf::RenderWindow window;
 	sf::Time timePerFrame;
-	Tank tank;
+	Player tank;
 };
