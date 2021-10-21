@@ -52,7 +52,7 @@ void Game::processEvents()
 
 void Game::update(const sf::Time& deltaTime)
 { 
-	tank.update(deltaTime);
+	tank.update(deltaTime.asMilliseconds());
 }
 
 void Game::render()

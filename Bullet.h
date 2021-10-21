@@ -6,7 +6,7 @@ class Bullet
 public:
 	Bullet(const sf::Vector2f&, const float);
 	
-	void update(const sf::Time&);
+	void update(const sf::Int32&);
 
 	const sf::CircleShape& getShape() const;
 

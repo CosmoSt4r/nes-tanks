@@ -10,7 +10,7 @@ public:
 
 	void handleInput(const sf::Keyboard::Key&, const bool);
 	void shoot(const sf::Int32&) override;
-	void update(const sf::Time&) override;
+	void update(const sf::Int32&) override;
 
 private:
 	void putKeyOnStack(const sf::Keyboard::Key&, const bool);

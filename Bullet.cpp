@@ -15,11 +15,11 @@ Bullet::Bullet(const sf::Vector2f& position, const float angle)
 	setMovement(angle);
 }
 
-void Bullet::update(const sf::Time& deltaTime)
+void Bullet::update(const sf::Int32& elapsedTime)
 {
 	/* Update bullet's position */
 
-	shape.move(movement * (float)deltaTime.asMilliseconds() / 2.f);
+	shape.move(movement * (float)elapsedTime / 2.f);
 }
 
 const sf::CircleShape& Bullet::getShape() const

@@ -95,17 +95,14 @@ void Player::shoot(const sf::Int32& elapsedTime)
 	}
 }
 
-void Player::update(const sf::Time& deltaTime)
+void Player::update(const sf::Int32& elapsedTime)
 {
 	/* Update tank's position */
-
-	sf::Int32 elapsedTime = deltaTime.asMilliseconds();
-
 	shoot(elapsedTime);
 	
 	/* Update all bullets */
 	for (Bullet& bullet : bullets)
-		bullet.update(deltaTime);
+		bullet.update(elapsedTime);
 
 	/* Move sprite according to pressed key */
 	sprite.move(movement * (float)elapsedTime / 2.f);

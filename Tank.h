@@ -14,7 +14,7 @@ public:
 	{ return bullets; }
 
 	virtual void shoot(const sf::Int32&)=0;
-	virtual void update(const sf::Time&)=0;
+	virtual void update(const sf::Int32&)=0;
 
 protected:
 	float speed;
