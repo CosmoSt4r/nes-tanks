@@ -2,7 +2,8 @@
 
 Game::Game()
 	: window(sf::VideoMode(800, 600), "Tanks!")
-	, tank(sf::Vector2f(300, 300), "resources/tank.png")
+	, tank(sf::Vector2f(100, 100), "resources/player.png")
+	, enemy(sf::Vector2f(400, 300), "resources/enemy.png")
 {
 	/* ---Constructor---
 	 * Call Tank's and SFML Window's constructors
@@ -52,7 +53,18 @@ void Game::processEvents()
 
 void Game::update(const sf::Time& deltaTime)
 { 
-	tank.update(deltaTime.asMilliseconds());
+	sf::Int32 elapsedTime = deltaTime.asMilliseconds();
+
+	for (const Bullet& bullet : tank.getBullets())
+	{
+		if (enemy.getSprite().getGlobalBounds().contains(
+								bullet.getShape().getPosition()))
+			enemy.destroy();
+	}
+	tank.update(elapsedTime);
+	enemy.update(elapsedTime);
+
+	
 }
 
 void Game::render()
@@ -61,5 +73,6 @@ void Game::render()
 	for (Bullet bullet : tank.getBullets())
 		window.draw(bullet.getShape());
 	window.draw(tank.getSprite());
+	window.draw(enemy.getSprite());
 	window.display();
 }

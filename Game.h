@@ -2,6 +2,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "Player.h"
+#include "Enemy.h"
 
 class Game
 {
@@ -17,4 +18,5 @@ private:
 	sf::RenderWindow window;
 	sf::Time timePerFrame;
 	Player tank;
+	Enemy enemy;
 };
